@@ -4,7 +4,6 @@ from app.components.error import ApiError
 BASE = "http://localhost:8000/productos"
 TIME_OUT = 10
 
-
 def list_products(limit: int = 20, offset: int = 0) -> dict:
     try:
         r = requests.get(f"{BASE}/", params={"limit": limit, "offset": offset}, timeout=TIME_OUT)
@@ -12,8 +11,7 @@ def list_products(limit: int = 20, offset: int = 0) -> dict:
             return r.json() if r.content else {}
         raise ValueError(f"Error {r.status_code}", r.status_code, r.text)
     except requests.exceptions.RequestException as e:
-        raise ValueError("Error de conexión", None, str(e))
-
+        raise ValueError("Error de conexion", None, str(e))
 
 def get_product(product_id: str) -> dict:
     try:
@@ -22,8 +20,7 @@ def get_product(product_id: str) -> dict:
             return r.json() if r.content else {}
         raise ValueError(f"Error {r.status_code}", r.status_code, r.text)
     except requests.exceptions.RequestException as e:
-        raise ValueError("Error de conexión", None, str(e))
-
+        raise ValueError("Error de conexion", None, str(e))
 
 def create_product(data: dict) -> dict:
     try:
@@ -32,8 +29,7 @@ def create_product(data: dict) -> dict:
             return r.json() if r.content else {}
         raise ValueError(f"Error {r.status_code}", r.status_code, r.text)
     except requests.exceptions.RequestException as e:
-        raise ValueError("Error de conexión", None, str(e))
-
+        raise ValueError("Error de conexion", None, str(e))
 
 def update_product(product_id: str, data: dict) -> dict:
     try:
@@ -47,12 +43,11 @@ def update_product(product_id: str, data: dict) -> dict:
             raise ApiError(detail, r.status_code)
         return r.json()
     except requests.Timeout:
-        raise ApiError("El servidor tardó demasiado en responder", 0)
+        raise ApiError("El servidor tardo demasiado en responder", 0)
     except requests.ConnectionError:
         raise ApiError("No se pudo conectar al servidor", 0)
     except requests.RequestException as e:
         raise ApiError(f"Error de red {str(e)}", 0)
-
 
 def delete_product(product_id: str) -> dict:
     try:
@@ -61,4 +56,4 @@ def delete_product(product_id: str) -> dict:
             return r.json() if r.content else {}
         raise ValueError(f"Error {r.status_code}", r.status_code, r.text)
     except requests.exceptions.RequestException as e:
-        raise ValueError("Error de conexión", None, str(e))
+        raise ValueError("Error de conexion", None, str(e))
