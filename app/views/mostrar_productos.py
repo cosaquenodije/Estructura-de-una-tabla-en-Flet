@@ -33,7 +33,7 @@ def products_view(page: ft.Page) -> ft.Control:
             )
         )
 
-    return ft.DataTable(
+    tabla = ft.DataTable(
         columns=columnas,
         rows=filas,
         width=900,
@@ -42,3 +42,25 @@ def products_view(page: ft.Page) -> ft.Control:
         data_row_max_height=60,
         data_row_min_height=48
     )
+
+    #Regresa la tabla con los datos
+    #return tabla
+
+    total_text = ft.Text(f"Total de productos: {len(productos)}", style=Textos_estilos.H4)
+
+    btn_nuevo = ft.ElevatedButton("Nuevo registro")
+
+    #Se prepara un sistema de columnas para mostrar tanto el total de registros y
+    #la tabla y con un mejor formato
+    #Cuando se necesita el scroll tambien se muestra
+    contenido = ft.Column(
+        #Se crea un espacio entre cada elemento
+        spacing=30,
+        #Cuando no caben los elementos se genera el scroll
+        scroll=ft.ScrollMode.AUTO,
+        #Se establecen tanto el total como la tabla para mostrar
+        ######## Se agrega el boton de nuevo registro ########
+        controls=[btn_nuevo, total_text, ft.Container(content=tabla)]
+    )
+    #Se muestra esa columna
+    return contenido
